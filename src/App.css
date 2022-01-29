@@ -1,5 +1,14 @@
+*{
+  margin : 0;
+  padding : 0;
+}
 .App {
+  height: 100vh;
   text-align: center;
+  /* background-image: url(./images/Bg.png);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 .App-logo {

@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "rideName": "BIKE",
+        "seatNumber": 1,
+        "price": "Yuan Renminbi",
+        "imageURL": "https://i.imgur.com/gBfMOhm.png"
+    },
+    {
+        "id": 2,
+        "rideName": "CAR",
+        "seatNumber": 2,
+        "price": "Dram",
+        "imageURL": "https://i.imgur.com/Q9pyydf.png"
+    },
+    {
+        "id": 3,
+        "rideName": "BUS",
+        "seatNumber": 3,
+        "price": "Yuan Renminbi",
+        "imageURL": "https://i.imgur.com/pxKj6S1.png"
+    },
+    {
+        "id": 4,
+        "rideName": "TRAIN",
+        "seatNumber": 4,
+        "price": "Euro",
+        "imageURL": "https://i.imgur.com/CLfQxAz.png"
+    }
+]
