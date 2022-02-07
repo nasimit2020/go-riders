@@ -4,17 +4,19 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { createNewUser, handleGoogleSignIn, logInUser } from '../Login/LoginManager';
 import RideDetails from '../RideDetails/RideDetails';
-import google from './../../images/google-logo.png';
+import google from './../../images/google.png';
 import './SignUp.css';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+
 
 const SignUp = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    // console.log(loggedInUser);
     const [user, setUser] = useState({
         isSignIn: false,
         name: '',
         email: '',
-        password: '',
         photoURL: '',
     })
     // console.log(user);
@@ -34,18 +36,35 @@ const SignUp = () => {
 
     const [visible, setVisible] = useState(false);
 
+    // Two password match working
+    // const schema = yup.object({
+    //     password: yup.string()
+    //         .required('Password is required'),
+    //     passwordConfirm: yup.string()
+    //         .required('Confirm Password is required')
+    //         .oneOf([yup.ref('password')], 'Passwords must and should match'),
+    // });
+    // {
+    //     resolver: yupResolver(schema)
+    // }
+
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
+  
+
     const onSubmit = (data) => {
-            createNewUser(data.email, data.password)
-                .then(res => {
-                    console.log(res);
-                    setUser(res);
-                    setLoggedInUser(res);
-                })
+        createNewUser(data)
+            .then(res => {
+                console.log(res);
+                setUser(res);
+                setLoggedInUser(res);
+            })
     };
 
 
     const onLogin = (data) => {
+        debugger;
+        console.log(data);
         logInUser(data.email, data.password)
             .then(res => {
                 setUser(res);
@@ -62,45 +81,57 @@ const SignUp = () => {
             <div className="container">
                 {
                     visible &&
-                    <form onSubmit={handleSubmit(onLogin)} className="formAlign ">
-                        <input className="form-control" type="text" placeholder="Email" {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
-                        <br />
-                        <input className="form-control" type="password" placeholder="Password" {...register("password", { required: true, minLength: 6, maxLength: 12 })} />
-                        <br />
-                        <input className="form-control bg-warning mb-2" type="submit" value="Login" />
-                        <span>New User?</span> <Link to="" onClick={() => setVisible(!visible)}>Create an Account</Link>
-                    </form>
+                    <div className="">
+                        <form onSubmit={handleSubmit(onLogin)} className="formAlign ">
+                            <input className="form-control" type="text" placeholder="Email" {...register("email", { required: true, pattern: /\S+@\S+\.\S+/ })} />
+                            {errors.email?.type === 'pattern' && <p style={{ color: 'red' }}>"Please write a valid email address"</p>}
+                            <br />
+
+                            <input className="form-control" type="password" placeholder="Password" {...register("password", { required: true, minLength: 6, maxLength: 12 })} />
+                            {errors.password?.type === 'required' && <p style={{ color: 'red' }}>"Password is required"</p>}
+                            <br />
+
+                            <input className="form-control bg-warning mb-2" type="submit" value="Login" />
+                            <span>New User?</span> <Link to="" onClick={() => setVisible(!visible)}>Create an Account</Link>
+                        </form>
+                    </div>
                 }
                 {
                     !visible &&
                     <form onSubmit={handleSubmit(onSubmit)} className="formAlign">
                         <input className="form-control" type="text" placeholder="Name" {...register("name", { required: true })} />
-                        {errors.name?.type === 'required' && "Name is required"}
+                        {errors.name?.type === 'required' && <p style={{ color: 'red' }}>"Name is required"</p>}
                         <br />
+
                         <input className="form-control" type="email" placeholder="Email" {...register("email", { required: true, pattern: /\S+@\S+\.\S+/ })} />
-                        {errors.email?.type === 'required' && "Email is required"}
+                        {errors.email?.type === 'pattern' && <p style={{ color: 'red' }}>"Please write a valid email address"</p>}
                         <br />
+
                         <input className="form-control" type="password" placeholder="Password" {...register("password", { required: true })} />
-                        {errors.password?.type === 'required' && "Password is required"}
+                        {errors.password?.type === 'required' && <p style={{ color: 'red' }}>"Password is required"</p>}
                         <br />
-                        {/* <input className="form-control" type="password" placeholder="Conform Password" {...register("Mobile number", { required: true, minLength: 6, maxLength: 12 })} /> */}
-                        {/* <br /> */}
+
+                        {/* <input className="form-control" type="password" placeholder="Conform Password" {...register("passwordConfirm", { required: true })} />
+                        <p style={{ color: 'red' }}>{errors.password?.type === 'required' && "Password is required"}</p>
+                        <br /> */}
+
                         <input className="form-control bg-warning mb-2" type="submit" value="Create an Account" />
                         <span>Already have an account?</span> <Link to="" onClick={() => setVisible(!visible)}>Login</Link>
                     </form>
+
                 }
 
-                {/* <div className="" style={{ width: "400px", margin: "0 auto" }}>
+                <div className="" style={{ width: "400px", margin: "0 auto" }}>
                     <div className="group">
                         <div className="item line"></div>
                         <div className="item text">Or</div>
                         <div className="item line"></div>
                     </div>
-                </div> */}
+                </div>
 
-                <div className="input-group mb-3 border rounded-pill" style={{ width: "400px", margin: "0 auto" }}>
+                <div className="input-group mb-3 border rounded-pill bg-warning" style={{ width: "400px", margin: "0 auto" }}>
                     <img src={google} alt="" style={{ width: "10%", padding: "5px" }} />
-                    <input type="text" onClick={googleSignIn} className="form-control btn" placeholder="Login with Google" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="text" onClick={googleSignIn} className="form-control btn " placeholder="Login with Google" aria-label="Username" aria-describedby="basic-addon1" />
                 </div>
             </div>
         );

@@ -16,15 +16,17 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      <Header></Header>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/ride/:rideId" element={<RideDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
+      <div className="App">
+        <Header></Header>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/ride/:rideId" element={<RideDetails />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Routes>
+      </div>
     </UserContext.Provider>
   );
 }

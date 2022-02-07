@@ -39,10 +39,9 @@ export const handleGoogleSignIn = () => {
         });
 }
 
-export const createNewUser = (name, email, password) => {
-    return createUserWithEmailAndPassword(auth,name, email, password)
+export const createNewUser = (data) => {
+    return createUserWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential) => {
-            // Signed in 
             const user = userCredential.user;
             console.log(user);
             const logInUser = {
@@ -51,13 +50,12 @@ export const createNewUser = (name, email, password) => {
                 email: user.email,
                 photoURL: user.photoURL,
             }
-            // console.log(logInUser);
+            updateUserName(data)
             return logInUser;
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
         });
 
 }
@@ -67,7 +65,6 @@ export const createNewUser = (name, email, password) => {
 export const logInUser = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // Signed in 
             const user = userCredential.user;
             const logInUser = {
                 isSignIn: true,
@@ -75,12 +72,22 @@ export const logInUser = (email, password) => {
                 email: user.email,
                 photoURL: user.photoURL,
             }
-            // console.log(logInUser);
             return logInUser;
-            // ...
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
         });
+}
+
+const updateUserName = (data) => {
+    updateProfile(auth.currentUser, {
+        displayName: data.name
+      }).then(() => {
+        // Profile updated!
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
 }

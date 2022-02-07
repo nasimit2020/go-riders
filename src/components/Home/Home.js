@@ -6,12 +6,11 @@ import './Home.css'
 const Home = () => {
     return (
         <div className="container bgStyle">
-            {
-                fakedata.map((ride, id) => <AllRides
-                     ride={ride}
-                     key={id}
-                ></AllRides>)
-            }
+            <div className="row">
+                {
+                    fakedata.map((ride, id) => <AllRides ride={ride} key={id}></AllRides>)
+                }
+            </div>
         </div>
     );
 };
