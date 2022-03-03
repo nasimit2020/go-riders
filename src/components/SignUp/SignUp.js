@@ -34,7 +34,7 @@ const SignUp = () => {
             })
     }
 
-    const [visible, setVisible] = useState(false);
+    
 
     // Two password match working
     // const schema = yup.object({
@@ -55,7 +55,6 @@ const SignUp = () => {
     const onSubmit = (data) => {
         createNewUser(data)
             .then(res => {
-                console.log(res);
                 setUser(res);
                 setLoggedInUser(res);
             })
@@ -63,8 +62,6 @@ const SignUp = () => {
 
 
     const onLogin = (data) => {
-        debugger;
-        console.log(data);
         logInUser(data.email, data.password)
             .then(res => {
                 setUser(res);
@@ -72,7 +69,7 @@ const SignUp = () => {
             })
     };
 
-
+    const [visible, setVisible] = useState(false);
 
 
     return loggedInUser.email
