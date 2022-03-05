@@ -6,8 +6,6 @@ import { createNewUser, handleGoogleSignIn, logInUser } from '../Login/LoginMana
 import RideDetails from '../RideDetails/RideDetails';
 import google from './../../images/google.png';
 import './SignUp.css';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 
 
 
@@ -33,20 +31,6 @@ const SignUp = () => {
                 navigate(location.state.from);
             })
     }
-
-    
-
-    // Two password match working
-    // const schema = yup.object({
-    //     password: yup.string()
-    //         .required('Password is required'),
-    //     passwordConfirm: yup.string()
-    //         .required('Confirm Password is required')
-    //         .oneOf([yup.ref('password')], 'Passwords must and should match'),
-    // });
-    // {
-    //     resolver: yupResolver(schema)
-    // }
 
     
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -107,10 +91,6 @@ const SignUp = () => {
                         <input className="form-control" type="password" placeholder="Password" {...register("password", { required: true })} />
                         {errors.password?.type === 'required' && <p style={{ color: 'red' }}>"Password is required"</p>}
                         <br />
-
-                        {/* <input className="form-control" type="password" placeholder="Conform Password" {...register("passwordConfirm", { required: true })} />
-                        <p style={{ color: 'red' }}>{errors.password?.type === 'required' && "Password is required"}</p>
-                        <br /> */}
 
                         <input className="form-control bg-warning mb-2" type="submit" value="Create an Account" />
                         <span>Already have an account?</span> <Link to="" onClick={() => setVisible(!visible)}>Login</Link>
