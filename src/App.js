@@ -8,6 +8,7 @@ import SignUp from './components/SignUp/SignUp';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { createContext, useState } from 'react';
 import Dashboard from './components/Dashboard/Dashboard';
+import NotFound from './components/NotFound/NotFound';
 
 
 export const UserContext = createContext();
@@ -25,6 +26,7 @@ function App() {
             <Route path="/ride/:rideId" element={<RideDetails />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </UserContext.Provider>
